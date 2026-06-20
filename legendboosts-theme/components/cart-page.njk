@@ -1,0 +1,51 @@
+<section id="{{ componentId }}" class="component lb-cart-page" data-component-id="{{ componentId }}">
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">Your Cart</h2>
+    <div class="lb-section-line"></div>
+  </div>
+
+  <template x-if="appCart.count === 0">
+    <div class="lb-empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" class="lb-empty-icon" fill="currentColor" viewBox="0 0 256 256"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87Z"/></svg>
+      <p class="lb-empty-title">Your cart is empty</p>
+      <a href="{{ '/products' | shopUrl }}" class="lb-btn lb-btn--primary">Browse Products</a>
+    </div>
+  </template>
+
+  <template x-if="appCart.count > 0">
+    <div class="lb-cart-layout">
+      <div class="lb-cart-items">
+        <template x-for="item in appCart.items" :key="item.id">
+          <div class="lb-cart-item">
+            <div class="lb-cart-item-info">
+              <span class="lb-cart-item-name" x-text="item.product_name"></span>
+              <span class="lb-cart-item-variant" x-text="item.variant_name"></span>
+            </div>
+            <div class="lb-cart-item-actions">
+              <div class="lb-qty-control">
+                <button @click="appCart.decreaseQuantity(item.id)" class="lb-qty-btn">-</button>
+                <span class="lb-qty-val" x-text="item.quantity"></span>
+                <button @click="appCart.increaseQuantity(item.id)" class="lb-qty-btn">+</button>
+              </div>
+              <span class="lb-cart-item-price" x-text="appCurrency.format(item.price * item.quantity, item.currency)"></span>
+              <button @click="appCart.removeItem(item.id)" class="lb-cart-remove">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="lb-cart-summary">
+        <div class="lb-cart-total-row">
+          <span>Total</span>
+          <span class="lb-cart-total" x-text="appCurrency.format(appCart.total, appCart.currency)"></span>
+        </div>
+        <button @click="appCart.checkout()" class="lb-btn lb-btn--primary lb-btn--full">
+          Checkout
+        </button>
+        <a href="{{ '/products' | shopUrl }}" class="lb-btn lb-btn--ghost lb-btn--full">Continue Shopping</a>
+      </div>
+    </div>
+  </template>
+</section>

@@ -1,0 +1,14 @@
+<div class="lb-feedback-card">
+  <div class="lb-feedback-stars">
+    {% for i in range(feedback.rating) %}★{% endfor %}{% for i in range(5 - feedback.rating) %}<span class="lb-star-empty">★</span>{% endfor %}
+  </div>
+  {% if feedback.message %}
+  <p class="lb-feedback-text">"{{ feedback.message }}"</p>
+  {% endif %}
+  <div class="lb-feedback-meta">
+    <span class="lb-feedback-author">{{ feedback.customer_username or 'Anonymous' }}</span>
+    {% if feedback.product_name %}
+    <span class="lb-feedback-product">{{ feedback.product_name }}</span>
+    {% endif %}
+  </div>
+</div>

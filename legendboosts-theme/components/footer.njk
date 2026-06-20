@@ -1,0 +1,61 @@
+<footer class="component lb-footer" data-component-id="footer">
+  <div class="lb-footer-inner">
+    <div class="lb-footer-brand">
+      {% if global.components.footer.show_logo and shop.image_url %}
+        <img src="{{ shop.image_url }}" alt="{{ shop.name }}" class="lb-footer-logo" />
+      {% endif %}
+      {% if global.components.footer.show_shop_name %}
+        <span class="lb-footer-name">{{ shop.name }}</span>
+      {% endif %}
+
+      {% if global.components.footer.show_socials %}
+      <div class="lb-footer-socials">
+        {% if shop.discord_url %}
+          <a href="{{ shop.discord_url }}" target="_blank" class="lb-social-link" title="Discord">
+            <i class="fab fa-discord"></i>
+          </a>
+        {% endif %}
+        {% if shop.telegram_url %}
+          <a href="{{ shop.telegram_url }}" target="_blank" class="lb-social-link" title="Telegram">
+            <i class="fab fa-telegram"></i>
+          </a>
+        {% endif %}
+        {% if shop.instagram_url %}
+          <a href="{{ shop.instagram_url }}" target="_blank" class="lb-social-link" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+        {% endif %}
+        {% if shop.tiktok_url %}
+          <a href="{{ shop.tiktok_url }}" target="_blank" class="lb-social-link" title="TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        {% endif %}
+        {% if shop.youtube_url %}
+          <a href="{{ shop.youtube_url }}" target="_blank" class="lb-social-link" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+        {% endif %}
+        {% if shop.twitter_url %}
+          <a href="{{ shop.twitter_url }}" target="_blank" class="lb-social-link" title="Twitter/X">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    {% if global.components.footer.links | length > 0 %}
+    <div class="lb-footer-links">
+      {% for link in global.components.footer.links %}
+        <a href="{{ link.link | shopUrl }}" target="{{ '_blank' if link.new_tab }}" class="lb-footer-link">
+          {{ link.text }}
+        </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="lb-footer-copy">
+    {{ global.components.footer.copyright | renderString | safe }}
+  </div>
+</footer>

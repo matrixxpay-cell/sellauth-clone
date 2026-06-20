@@ -1,0 +1,22 @@
+<section id="{{ componentId }}" class="component lb-text-image-block {{ 'lb-text-image-block--bg' if properties.show_background }}" data-component-id="{{ componentId }}">
+  <div class="lb-text-image-grid">
+    <div class="lb-text-image-text">
+      {% if properties.title %}
+      <h2 class="lb-text-block-title lb-text-align-{{ properties.title_alignment or 'left' }}">{{ properties.title | renderString }}</h2>
+      {% endif %}
+      {% if properties.text %}
+      <div class="lb-text-block-content lb-text-align-{{ properties.content_alignment or 'left' }} lb-prose">{{ properties.text | renderString | safe }}</div>
+      {% endif %}
+      {% if properties.buttons | length > 0 %}
+      <div class="lb-text-block-buttons">
+        {% render_snippet "buttons.njk", buttons=properties.buttons %}
+      </div>
+      {% endif %}
+    </div>
+    {% if properties.image %}
+    <div class="lb-text-image-img">
+      <img src="{{ properties.image }}" alt="" class="lb-text-image-photo" style="aspect-ratio: {{ properties.aspect_ratio if properties.aspect_ratio and properties.aspect_ratio != 'Default' else '16/9' }}" />
+    </div>
+    {% endif %}
+  </div>
+</section>

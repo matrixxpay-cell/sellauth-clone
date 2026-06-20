@@ -1,0 +1,22 @@
+<div class="lb-customer-page">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <h1 class="lb-section-title">My Account</h1>
+    <div class="lb-section-line"></div>
+    <div class="lb-customer-info">
+      <div class="lb-info-row">
+        <span class="lb-info-label">Email</span>
+        <span class="lb-info-value">{{ shop_customer.email }}</span>
+      </div>
+      {% if shop_customer.username %}
+      <div class="lb-info-row">
+        <span class="lb-info-label">Username</span>
+        <span class="lb-info-value">{{ shop_customer.username }}</span>
+      </div>
+      {% endif %}
+    </div>
+    <form action="{{ '/customer/logout' | shopUrl }}" method="post" class="lb-customer-logout">
+      <button type="submit" class="lb-btn lb-btn--ghost">Sign Out</button>
+    </form>
+  </div>
+</div>

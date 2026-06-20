@@ -1,0 +1,15 @@
+<section id="{{ componentId }}" class="component lb-gallery-section" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">{{ properties.title | renderString }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  {% endif %}
+  <div class="lb-gallery-grid lb-gallery-cols-{{ properties.items_per_row or 2 }}">
+    {% for video in properties.videos %}
+    <div class="lb-gallery-item">
+      <lite-youtube videoid="{{ video.link | youtubeId }}" style="aspect-ratio:{{ video.aspect_ratio or '16/9' }}" class="lb-video"></lite-youtube>
+    </div>
+    {% endfor %}
+  </div>
+</section>

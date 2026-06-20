@@ -1,0 +1,17 @@
+{% if pagination and pagination.total_pages > 1 %}
+<nav class="lb-pagination">
+  {% if pagination.current_page > 1 %}
+  <a href="{{ pagination.prev_url }}" class="lb-page-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+  </a>
+  {% endif %}
+  {% for page in range(1, pagination.total_pages + 1) %}
+  <a href="{{ pagination.page_url(page) }}" class="lb-page-btn {{ 'lb-page-btn--active' if page == pagination.current_page }}">{{ page }}</a>
+  {% endfor %}
+  {% if pagination.current_page < pagination.total_pages %}
+  <a href="{{ pagination.next_url }}" class="lb-page-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}

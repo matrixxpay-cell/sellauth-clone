@@ -1,0 +1,51 @@
+{
+  "global": {
+    "properties": {
+      "accent_color": "#6c63ff",
+      "background_color": "#0a0a0a",
+      "card_color": "#111111",
+      "text_primary_color": "#ffffff",
+      "text_accent_color": "#ffffff",
+      "font": "Inter",
+      "product_card_image_aspect_ratio": "16/9",
+      "product_page_image_aspect_ratio": "16/9",
+      "product_image_fit": "cover",
+      "group_card_image_aspect_ratio": "16/9",
+      "group_image_fit": "cover",
+      "blog_card_image_aspect_ratio": "16/9",
+      "blog_image_fit": "cover"
+    },
+    "components": {
+      "header": {
+        "show_shop_name": true,
+        "show_logo": true,
+        "show_description": false,
+        "show_stats": true,
+        "hide_currency_selector": false,
+        "hide_customer_dashboard": false,
+        "hide_cart": false,
+        "links": [
+          { "text": "Home", "link": "/", "new_tab": false },
+          { "text": "Products", "link": "/products", "new_tab": false },
+          { "text": "Reviews", "link": "/feedback", "new_tab": false },
+          { "text": "FAQ", "link": "/faq", "new_tab": false },
+          { "text": "Status", "link": "/status", "new_tab": false }
+        ]
+      },
+      "announcement": {
+        "announcements": []
+      },
+      "footer": {
+        "show_shop_name": true,
+        "show_logo": true,
+        "show_socials": true,
+        "copyright": "Copyright © {{ shop.name }} {{ '' | currentYear }}",
+        "links": [
+          { "text": "Terms of Service", "link": "/terms-of-service", "new_tab": false },
+          { "text": "Privacy Policy", "link": "/privacy-policy", "new_tab": false },
+          { "text": "Refund Policy", "link": "/refund-policy", "new_tab": false }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<div class="lb-customer-page" x-data="appTickets()">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <div class="lb-customer-content-header">
+      <h1 class="lb-section-title">Support Tickets</h1>
+      <button @click="openCreateModal()" class="lb-btn lb-btn--primary lb-btn--sm">New Ticket</button>
+    </div>
+    <div class="lb-section-line"></div>
+    {% if tickets | length == 0 %}
+    <div class="lb-empty-state">
+      <p class="lb-empty-title">No tickets yet.</p>
+    </div>
+    {% else %}
+    <div class="lb-tickets-list">
+      {% for ticket in tickets %}
+      <a href="{{ ('/customer/tickets/' + ticket.id) | shopUrl }}" class="lb-ticket-card">
+        <div class="lb-ticket-header">
+          <span class="lb-ticket-subject">{{ ticket.subject }}</span>
+          <span class="lb-status-badge lb-status-{{ ticket.status }}">{{ ticket.status }}</span>
+        </div>
+        <span class="lb-ticket-date">{{ ticket.created_at | date('MMM D, YYYY') }}</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% render_snippet "pagination.njk" %}
+    {% endif %}
+  </div>
+  {% render_snippet "ticket-create-modal.njk" %}
+</div>

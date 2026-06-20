@@ -1,0 +1,14 @@
+<a href="{{ ('/blog/' + post.slug) | shopUrl }}" class="lb-blog-card">
+  {% if post.image_url %}
+  <div class="lb-blog-card-image-wrap">
+    <img src="{{ post.image_url }}" alt="{{ post.title }}" class="lb-blog-card-image" style="aspect-ratio: var(--blog-card-image-aspect-ratio); object-fit: cover;" loading="lazy" />
+  </div>
+  {% endif %}
+  <div class="lb-blog-card-body">
+    <h3 class="lb-blog-card-title">{{ post.title }}</h3>
+    {% if post.excerpt %}
+    <p class="lb-blog-card-excerpt">{{ post.excerpt }}</p>
+    {% endif %}
+    <span class="lb-blog-card-date">{{ post.created_at | date('MMM D, YYYY') }}</span>
+  </div>
+</a>

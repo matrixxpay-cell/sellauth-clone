@@ -1,0 +1,29 @@
+<div class="lb-customer-page">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <a href="{{ '/customer/tickets' | shopUrl }}" class="lb-back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+      Back to Tickets
+    </a>
+    <h1 class="lb-section-title">{{ ticket.subject }}</h1>
+    <div class="lb-section-line"></div>
+    <div class="lb-ticket-messages">
+      {% for message in ticket.messages %}
+      <div class="lb-ticket-message {{ 'lb-ticket-message--staff' if message.is_staff }}">
+        <div class="lb-ticket-message-meta">
+          <span class="lb-ticket-message-author">{{ 'Support' if message.is_staff else 'You' }}</span>
+          <span class="lb-ticket-message-date">{{ message.created_at | date('MMM D, YYYY HH:mm') }}</span>
+        </div>
+        <div class="lb-ticket-message-body lb-prose">{{ message.content | safe }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <form action="{{ ('/customer/tickets/' + ticket.id + '/reply') | shopUrl }}" method="post" class="lb-form">
+      <div class="lb-form-group">
+        <label class="lb-label">Reply</label>
+        <textarea name="message" class="lb-input lb-textarea" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="lb-btn lb-btn--primary">Send Reply</button>
+    </form>
+  </div>
+</div>

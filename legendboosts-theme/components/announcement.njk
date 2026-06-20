@@ -1,0 +1,7 @@
+{% if global.components.announcement.announcements | length > 0 %}
+<div class="component lb-announcement" data-component-id="announcement">
+  {% for item in global.components.announcement.announcements %}
+    {% render_snippet "announcement-item.njk", item=item %}
+  {% endfor %}
+</div>
+{% endif %}

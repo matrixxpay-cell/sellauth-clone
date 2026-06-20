@@ -1,0 +1,34 @@
+<div class="lb-customer-page" x-data="appAffiliate()">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <h1 class="lb-section-title">Affiliate Program</h1>
+    <div class="lb-section-line"></div>
+    {% if shop_customer.affiliate %}
+    <div class="lb-affiliate-card">
+      <div class="lb-info-row">
+        <span class="lb-info-label">Your Code</span>
+        <div class="lb-affiliate-code-row">
+          <code class="lb-affiliate-code">{{ shop_customer.affiliate.code }}</code>
+          <button @click="navigator.clipboard.writeText('{{ shop_customer.affiliate.code }}')" class="lb-btn lb-btn--ghost lb-btn--sm">Copy</button>
+          <button @click="openEditModal()" class="lb-btn lb-btn--ghost lb-btn--sm">Edit</button>
+        </div>
+      </div>
+      <div class="lb-info-row">
+        <span class="lb-info-label">Commission</span>
+        <span class="lb-info-value">{{ shop_customer.affiliate.commission_rate }}%</span>
+      </div>
+      <div class="lb-info-row">
+        <span class="lb-info-label">Total Earned</span>
+        <span class="lb-info-value">
+          <span x-text="appCurrency.format({{ shop_customer.affiliate.total_earned or 0 }}, 'USD')">{{ formatPrice(shop_customer.affiliate.total_earned or 0, 'USD') }}</span>
+        </span>
+      </div>
+    </div>
+    {% else %}
+    <div class="lb-empty-state">
+      <p class="lb-empty-title">You're not enrolled in the affiliate program.</p>
+    </div>
+    {% endif %}
+  </div>
+  {% render_snippet "affiliate-edit-code-modal.njk" %}
+</div>

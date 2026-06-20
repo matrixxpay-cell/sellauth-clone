@@ -1,0 +1,23 @@
+<section id="{{ componentId }}" class="component lb-faq-section" data-component-id="{{ componentId }}" x-data="{ open: null }">
+  {% if properties.title %}
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">{{ properties.title | renderString }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  {% endif %}
+  <div class="lb-faq-list">
+    {% for item in properties.items %}
+    <div class="lb-faq-item" :class="{ 'lb-faq-item--open': open === {{ loop.index }} }">
+      <button class="lb-faq-question" @click="open = open === {{ loop.index }} ? null : {{ loop.index }}">
+        <span>{{ item.question }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="lb-faq-chevron" :class="{ 'rotate-180': open === {{ loop.index }} }">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+      <div class="lb-faq-answer" x-show="open === {{ loop.index }}" x-collapse>
+        <div class="lb-faq-answer-inner">{{ item.answer }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>

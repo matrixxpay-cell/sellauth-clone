@@ -1,0 +1,30 @@
+<div class="lb-status-card" x-show="order">
+  <div class="lb-status-header">
+    <span class="lb-status-badge" :class="'lb-status-' + order?.status">
+      <span x-text="order?.status"></span>
+    </span>
+    <span class="lb-status-order-id" x-text="'Order #' + order?.id"></span>
+  </div>
+  <div class="lb-status-items">
+    <template x-for="item in order?.items" :key="item.id">
+      <div class="lb-status-item">
+        <div>
+          <span class="lb-status-item-name" x-text="item.product_name"></span>
+          <span class="lb-status-item-variant" x-text="item.variant_name"></span>
+        </div>
+        <template x-if="item.serial_keys">
+          <div class="lb-serial-keys">
+            <template x-for="key in item.serial_keys" :key="key">
+              <div class="lb-serial-key">
+                <code x-text="key"></code>
+                <button @click="navigator.clipboard.writeText(key)" class="lb-copy-btn" title="Copy">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon-xs"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg>
+                </button>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+    </template>
+  </div>
+</div>

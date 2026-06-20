@@ -1,0 +1,23 @@
+<section id="{{ componentId }}" class="component lb-status-page" data-component-id="{{ componentId }}">
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">{{ properties.title or 'Order Status' }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  <div class="lb-status-lookup" x-data="appStatus">
+    <form @submit.prevent="lookup" class="lb-status-form">
+      <div class="lb-form-group">
+        <label class="lb-label">Order ID</label>
+        <input x-model="orderId" type="text" class="lb-input" placeholder="Enter your order ID" required />
+      </div>
+      <button type="submit" class="lb-btn lb-btn--primary" :disabled="loading">
+        <span x-show="!loading">Check Status</span>
+        <span x-show="loading">Checking...</span>
+      </button>
+    </form>
+    <template x-if="order">
+      <div class="lb-status-result">
+        {% render_snippet "status-card.njk" %}
+      </div>
+    </template>
+  </div>
+</section>

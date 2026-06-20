@@ -1,0 +1,7 @@
+{% for button in buttons %}
+  <a href="{{ button.link | shopUrl }}" target="{{ '_blank' if button.new_tab }}"
+     class="lb-btn {{ 'lb-btn--primary' if button.color == 'primary' else 'lb-btn--ghost' }}">
+    {% if button.icon %}<i class="{{ button.icon }} fa-fw"></i>{% endif %}
+    {{ button.text }}
+  </a>
+{% endfor %}

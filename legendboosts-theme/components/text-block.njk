@@ -1,0 +1,13 @@
+<section id="{{ componentId }}" class="component lb-text-block {{ 'lb-text-block--bg' if properties.show_background }}" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <h2 class="lb-text-block-title lb-text-align-{{ properties.title_alignment or 'left' }}">{{ properties.title | renderString }}</h2>
+  {% endif %}
+  {% if properties.text %}
+  <div class="lb-text-block-content lb-text-align-{{ properties.content_alignment or 'left' }} lb-prose">{{ properties.text | renderString | safe }}</div>
+  {% endif %}
+  {% if properties.buttons | length > 0 %}
+  <div class="lb-text-block-buttons lb-text-align-{{ properties.content_alignment or 'left' }}">
+    {% render_snippet "buttons.njk", buttons=properties.buttons %}
+  </div>
+  {% endif %}
+</section>

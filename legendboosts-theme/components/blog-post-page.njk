@@ -1,0 +1,10 @@
+<section id="{{ componentId }}" class="component lb-blog-post-page" data-component-id="{{ componentId }}">
+  {% if post.image_url %}
+  <img src="{{ post.image_url }}" alt="{{ post.title }}" class="lb-blog-post-cover" />
+  {% endif %}
+  <h1 class="lb-blog-post-title">{{ post.title }}</h1>
+  <div class="lb-blog-post-meta">
+    <span>{{ post.created_at | date('MMM D, YYYY') }}</span>
+  </div>
+  <div class="lb-prose lb-blog-post-content">{{ post.content | safe }}</div>
+</section>

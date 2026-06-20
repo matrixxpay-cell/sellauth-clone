@@ -1,0 +1,14 @@
+<section id="{{ componentId }}" class="component lb-blog-section" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">{{ properties.title | renderString }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  {% endif %}
+  <div class="lb-blog-grid {{ 'lb-blog-grid--centered' if properties.centered }}">
+    {% set postsToShow = blog_posts | slice(0, properties.amount) if properties.amount else blog_posts %}
+    {% for post in postsToShow %}
+      {% render_snippet "blog-post-card.njk", post=post %}
+    {% endfor %}
+  </div>
+</section>

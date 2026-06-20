@@ -1,0 +1,15 @@
+<div class="lb-customer-page">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <h1 class="lb-section-title">Balance</h1>
+    <div class="lb-section-line"></div>
+    <div class="lb-balance-card">
+      <div class="lb-balance-amount">
+        <span class="lb-balance-label">Available Balance</span>
+        <span class="lb-balance-value">
+          <span x-text="appCurrency.format({{ shop_customer.balance or 0 }}, 'USD')">{{ formatPrice(shop_customer.balance or 0, 'USD') }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

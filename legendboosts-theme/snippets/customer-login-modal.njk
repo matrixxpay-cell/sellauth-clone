@@ -1,0 +1,32 @@
+<div x-show="appCustomer.showModal" x-cloak class="lb-modal-overlay" @keydown.escape.window="appCustomer.closeModal()">
+  <div class="lb-modal-backdrop" @click="appCustomer.closeModal()"></div>
+  <div class="lb-modal-wrap lb-modal-wrap--sm"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0 scale-95"
+       x-transition:enter-end="opacity-100 scale-100">
+    <div class="lb-modal">
+      <div class="lb-modal-header">
+        <h3 class="lb-modal-title">Sign In</h3>
+        <button @click="appCustomer.closeModal()" class="lb-modal-close">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="lb-modal-body">
+        <form @submit.prevent="appCustomer.login()" class="lb-form">
+          <div class="lb-form-group">
+            <label class="lb-label">Email</label>
+            <input x-model="appCustomer.email" type="email" class="lb-input" placeholder="your@email.com" required />
+          </div>
+          <div class="lb-form-group">
+            <label class="lb-label">Password</label>
+            <input x-model="appCustomer.password" type="password" class="lb-input" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="lb-btn lb-btn--primary lb-btn--full" :disabled="appCustomer.loading">
+            <span x-show="!appCustomer.loading">Sign In</span>
+            <span x-show="appCustomer.loading">Signing in...</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

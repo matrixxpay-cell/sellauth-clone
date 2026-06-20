@@ -1,0 +1,13 @@
+<div class="lb-maintenance-login" x-data="appMaintenanceLogin()">
+  <div class="lb-maintenance-card">
+    <h2 class="lb-maintenance-title">Store Under Maintenance</h2>
+    <p class="lb-maintenance-desc">This store is temporarily unavailable. Please check back later.</p>
+    <form @submit.prevent="login()" class="lb-form">
+      <div class="lb-form-group">
+        <label class="lb-label">Admin Password</label>
+        <input x-model="password" type="password" class="lb-input" placeholder="Enter password" required />
+      </div>
+      <button type="submit" class="lb-btn lb-btn--primary lb-btn--full">Enter</button>
+    </form>
+  </div>
+</div>

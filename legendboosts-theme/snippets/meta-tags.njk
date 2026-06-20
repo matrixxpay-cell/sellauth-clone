@@ -1,0 +1,8 @@
+<title>{{ page_title or shop.name }}</title>
+<meta name="description" content="{{ page_description or shop.description }}" />
+<meta property="og:title" content="{{ page_title or shop.name }}" />
+<meta property="og:description" content="{{ page_description or shop.description }}" />
+{% if shop.image_url %}
+<meta property="og:image" content="{{ shop.image_url }}" />
+{% endif %}
+<link rel="icon" type="image/x-icon" href="{{ shop.image_url or '/favicon.ico' }}" />

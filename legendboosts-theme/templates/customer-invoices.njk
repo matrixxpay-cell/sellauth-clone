@@ -1,0 +1,36 @@
+<div class="lb-customer-page">
+  {% render_snippet "customer-sidebar.njk" %}
+  <div class="lb-customer-content">
+    <h1 class="lb-section-title">My Invoices</h1>
+    <div class="lb-section-line"></div>
+    {% if invoices | length == 0 %}
+    <div class="lb-empty-state">
+      <p class="lb-empty-title">No invoices yet.</p>
+    </div>
+    {% else %}
+    <div class="lb-invoices-list">
+      {% for invoice in invoices %}
+      <div class="lb-invoice-card">
+        <div class="lb-invoice-header">
+          <span class="lb-invoice-id">Order #{{ invoice.id }}</span>
+          <span class="lb-status-badge lb-status-{{ invoice.status }}">{{ invoice.status }}</span>
+          <span class="lb-invoice-date">{{ invoice.created_at | date('MMM D, YYYY') }}</span>
+        </div>
+        <div class="lb-invoice-items">
+          {% for item in invoice.items %}
+          <div class="lb-invoice-item">
+            <span>{{ item.product_name }} &mdash; {{ item.variant_name }}</span>
+            <span class="lb-invoice-price">
+              <span x-text="appCurrency.format({{ item.price }}, '{{ item.currency }}')">{{ formatPrice(item.price, item.currency) }}</span>
+            </span>
+          </div>
+          {% endfor %}
+        </div>
+        <a href="{{ ('/customer/invoices/' + invoice.id) | shopUrl }}" class="lb-btn lb-btn--ghost lb-btn--sm">View Details</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% render_snippet "pagination.njk" %}
+    {% endif %}
+  </div>
+</div>

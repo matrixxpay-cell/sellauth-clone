@@ -1,0 +1,13 @@
+<section id="{{ componentId }}" class="component lb-myvouches-section" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <div class="lb-section-header lb-text-align-{{ properties.title_alignment or 'left' }}">
+    <h2 class="lb-section-title">{{ properties.title | renderString }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  {% endif %}
+  {% if properties.username %}
+  <div class="lb-myvouches-embed">
+    <script src="https://myvouches.com/embed/{{ properties.username }}.js" async></script>
+  </div>
+  {% endif %}
+</section>

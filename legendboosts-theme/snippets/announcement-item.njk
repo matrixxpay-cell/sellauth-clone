@@ -1,0 +1,7 @@
+{% if item.link %}
+  <a href="{{ item.link }}" target="{{ '_blank' if item.new_tab }}" class="lb-announcement-item lb-announcement-item--link">
+    {{ item.text }}
+  </a>
+{% else %}
+  <div class="lb-announcement-item">{{ item.text }}</div>
+{% endif %}

@@ -1,0 +1,107 @@
+<header class="component lb-header" data-component-id="header">
+  <div class="lb-header-inner">
+    <!-- Brand -->
+    <div class="lb-brand">
+      {% if global.components.header.show_logo and shop.image_url %}
+        <a href="{{ '/' | shopUrl }}" class="lb-logo-link">
+          <img src="{{ shop.image_url }}" alt="{{ shop.name }}" class="lb-logo" />
+        </a>
+      {% endif %}
+      {% if global.components.header.show_shop_name %}
+        <a href="{{ '/' | shopUrl }}" class="lb-shop-name">{{ shop.name }}</a>
+      {% endif %}
+    </div>
+
+    <!-- Nav links -->
+    <nav class="lb-nav hide-scrollbar">
+      {% for link in global.components.header.links %}
+        {% set lActive = false %}
+        {% if (link.link == '/' and templateName == 'shop') or
+             (link.link == '/cart' and templateName == 'cart') or
+             (link.link == '/products' and templateName == 'products') or
+             (link.link == '/feedback' and templateName == 'feedback') or
+             (link.link == '/faq' and templateName == 'faq') or
+             (link.link == '/status' and templateName == 'status') or
+             (link.link == '/blog' and templateName == 'blog') %}
+          {% set lActive = true %}
+        {% endif %}
+        <a href="{{ link.link | shopUrl }}"
+           target="{{ '_blank' if link.new_tab }}"
+           class="lb-nav-link {{ 'lb-nav-link--active' if lActive }}">
+          {{ link.text }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    <!-- Right actions -->
+    <div class="lb-header-actions">
+      {% if not global.components.header.hide_currency_selector %}
+        {% if currency_rates_usd | length > 1 %}
+          <div class="currency-selector">
+            <select class="lb-select" style="width:80px;height:36px;">
+              {% for code, rate in currency_rates_usd %}
+                <option value="{{ code }}">
+                  <span class="symbol">{{ currency_symbols[code] }}</span>
+                  <span class="code">{{ code.toUpperCase() }}</span>
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {% if not global.components.header.hide_customer_dashboard %}
+        {% if shop_customer %}
+          <a href="{{ '/customer/dashboard' | shopUrl }}" class="lb-btn lb-btn--ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lb-icon" fill="currentColor" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></svg>
+            My Account
+          </a>
+        {% else %}
+          <button type="button" @click="appCustomer.loginOrRedirect()" class="lb-btn lb-btn--ghost">
+            Login
+          </button>
+        {% endif %}
+      {% endif %}
+
+      {% if not global.components.header.hide_cart %}
+        <a href="{{ '/cart' | shopUrl }}" class="lb-btn lb-btn--ghost lb-cart-btn {{ 'lb-cart-btn--active' if templateName == 'cart' }}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="lb-icon" fill="currentColor" viewBox="0 0 256 256"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z"/></svg>
+          <template x-if="appCart.countWithQuantities > 0">
+            <span class="lb-cart-badge" x-text="appCart.countWithQuantities > 9 ? '9+' : appCart.countWithQuantities"></span>
+          </template>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  {% if global.components.header.show_stats %}
+  <div class="lb-stats-bar">
+    <div class="lb-stat">
+      <span class="lb-stat-value">{{ helpers.numbers.formatCompact(shop.products_sold) }}</span>
+      <span class="lb-stat-label">Sales</span>
+    </div>
+    <div class="lb-stat-divider"></div>
+    <div class="lb-stat">
+      <span class="lb-stat-value">{{ helpers.numbers.formatCompact(shop.total_customers) }}</span>
+      <span class="lb-stat-label">Buyers</span>
+    </div>
+    <div class="lb-stat-divider"></div>
+    <div class="lb-stat">
+      <span class="lb-stat-value">★ {{ helpers.numbers.formatDecimal(shop.average_rating) }}</span>
+      <span class="lb-stat-label">Rating</span>
+    </div>
+    <div class="lb-stat-divider"></div>
+    <div class="lb-stat">
+      <span class="lb-stat-value">{{ helpers.numbers.formatCompact(shop.total_feedbacks) }}</span>
+      <span class="lb-stat-label">Reviews</span>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if global.components.header.show_description and shop.description|length > 0 %}
+  <div class="lb-header-desc">
+    <p>{{ shop.description }}</p>
+  </div>
+  {% endif %}
+</header>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% render_snippet "meta-tags.njk" %}
+  <link href="{{ 'built.css' | assetUrl }}" rel="stylesheet"/>
+  <link href="{{ 'custom.css' | assetUrl }}" rel="stylesheet"/>
+  <style id="theme-styles">
+    :root {
+      --cl-accent: {{ global.properties.accent_color | hex_to_rgb }};
+      --cl-background: {{ global.properties.background_color | hex_to_rgb }};
+      --cl-card: {{ global.properties.card_color | hex_to_rgb }};
+      --cl-t-primary: {{ (global.properties.text_primary_color if global.properties.text_primary_color else '#ffffff') | hex_to_rgb }};
+      --cl-t-accent: {{ (global.properties.text_accent_color if global.properties.text_accent_color else '#ffffff') | hex_to_rgb }};
+      --product-card-image-aspect-ratio: {{ (global.properties.product_card_image_aspect_ratio if global.properties.product_card_image_aspect_ratio else '16/9') }};
+      --product-page-image-aspect-ratio: {{ (global.properties.product_page_image_aspect_ratio if global.properties.product_page_image_aspect_ratio else '16/9') }};
+      --group-card-image-aspect-ratio: {{ (global.properties.group_card_image_aspect_ratio if global.properties.group_card_image_aspect_ratio else '16/9') }};
+      --blog-card-image-aspect-ratio: {{ (global.properties.blog_card_image_aspect_ratio if global.properties.blog_card_image_aspect_ratio else '16/9') }};
+      --product-image-fit: {{ (global.properties.product_image_fit if global.properties.product_image_fit else 'cover') }};
+      --group-image-fit: {{ (global.properties.group_image_fit if global.properties.group_image_fit else 'cover') }};
+    }
+    body {
+      font-family: '{{ (global.properties.font if global.properties.font else 'Inter') }}', sans-serif;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family={{ (global.properties.font if global.properties.font else 'Inter') | replace(' ', '+') }}:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" id="theme-font">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet" integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css" rel="stylesheet" integrity="sha256-gS3HxgWFFFqEo0wQoALebu5XlWdYr3gqd4/Tk5wt8Ig=" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.css" rel="stylesheet" integrity="sha256-qwd4FE0YEnXtN1D9SlLRzgZ35aJTclA5jg1poUQA3dE=" crossorigin="anonymous" />
+</head>
+<body class="text-t-primary lb-body" style="background-color: rgb({{ global.properties.background_color | hex_to_rgb }});">
+  {% if shop.background_image_url %}
+  <div class="fixed inset-0 z-[-1] bg-center bg-cover pointer-events-none" style="background-image: url({{ shop.background_image_url }});"></div>
+  {% endif %}
+
+  <div class="flex flex-col min-h-screen" id="app" x-data="app">
+    {% if templateName != 'maintenance' %}
+      {% render_component "announcement" %}
+      {% render_component "header" %}
+    {% endif %}
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 py-8 md:px-6 lg:px-8">
+      {{ templateContent | safe }}
+    </main>
+
+    {% if templateName != 'maintenance' %}
+      {% render_component "footer" %}
+      {% render_snippet "customer-login-modal.njk" %}
+    {% endif %}
+  </div>
+
+  <script>
+    window.shopId = {{ shop.id | json }};
+    window.apiBaseUrl = {{ '' | apiInternalUrl | json }};
+    window.currencyRatesUsd = {{ currency_rates_usd | json }};
+    window.currencySymbols = {{ currency_symbols | json }};
+    window.defaultCurrency = {{ currency | json }};
+    window.shopCustomer = {{ shop_customer | json }};
+  </script>
+
+  {% if isBuilder %}
+    {% render_snippet "script-builder.njk" %}
+  {% endif %}
+
+  {% if altcha or altcha_shop_customer %}
+  <script type="module">
+    import altcha from 'https://cdn.jsdelivr.net/npm/altcha@1.2.0/+esm'
+  </script>
+  {% elif shop.recaptcha_key %}
+  <script src="https://www.google.com/recaptcha/api.js?render={{ shop.recaptcha_key }}"></script>
+  {% endif %}
+
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js" integrity="sha256-P+JgcxEeZtxwYS1+TAAuusKFM646SB8Oodk0TYu9zuo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.js" integrity="sha256-t8Thbv2D6x0AC5rMk+Ydz589Zq4lp8ZC4iVfNNdxs5U=" crossorigin="anonymous"></script>
+  <script src="{{ 'script.js' | assetUrl }}" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js" integrity="sha256-aJ9ROXjRHWn00zeU9ylsmlhqLlXeebtEfN28P0dPnwc=" crossorigin="anonymous"></script>
+  {% render_snippet "script-integrations.njk" %}
+</body>
+</html>

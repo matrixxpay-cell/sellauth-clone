@@ -1,0 +1,22 @@
+<div x-show="appAffiliate.showEditModal" x-cloak class="lb-modal-overlay">
+  <div class="lb-modal-backdrop" @click="appAffiliate.closeEditModal()"></div>
+  <div class="lb-modal-wrap lb-modal-wrap--sm">
+    <div class="lb-modal">
+      <div class="lb-modal-header">
+        <h3 class="lb-modal-title">Edit Affiliate Code</h3>
+        <button @click="appAffiliate.closeEditModal()" class="lb-modal-close">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lb-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="lb-modal-body">
+        <form @submit.prevent="appAffiliate.updateCode()" class="lb-form">
+          <div class="lb-form-group">
+            <label class="lb-label">Affiliate Code</label>
+            <input x-model="appAffiliate.code" type="text" class="lb-input" required />
+          </div>
+          <button type="submit" class="lb-btn lb-btn--primary lb-btn--full" :disabled="appAffiliate.loading">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

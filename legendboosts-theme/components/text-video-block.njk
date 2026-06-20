@@ -1,0 +1,22 @@
+<section id="{{ componentId }}" class="component lb-text-image-block {{ 'lb-text-image-block--bg' if properties.show_background }}" data-component-id="{{ componentId }}">
+  <div class="lb-text-image-grid">
+    <div class="lb-text-image-text">
+      {% if properties.title %}
+      <h2 class="lb-text-block-title">{{ properties.title | renderString }}</h2>
+      {% endif %}
+      {% if properties.text %}
+      <div class="lb-text-block-content lb-prose">{{ properties.text | renderString | safe }}</div>
+      {% endif %}
+      {% if properties.buttons | length > 0 %}
+      <div class="lb-text-block-buttons">
+        {% render_snippet "buttons.njk", buttons=properties.buttons %}
+      </div>
+      {% endif %}
+    </div>
+    {% if properties.video_link %}
+    <div class="lb-text-image-img">
+      <lite-youtube videoid="{{ properties.video_link | youtubeId }}" style="aspect-ratio:16/9" class="lb-video"></lite-youtube>
+    </div>
+    {% endif %}
+  </div>
+</section>

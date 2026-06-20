@@ -1,0 +1,15 @@
+<section id="{{ componentId }}" class="component lb-feedbacks-section" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <div class="lb-section-header">
+    <h2 class="lb-section-title">{{ properties.title | renderString }}</h2>
+    <div class="lb-section-line"></div>
+  </div>
+  {% endif %}
+  <div class="lb-feedbacks-grid">
+    {% set feedbacksToShow = feedbacks | selectattr('automatic', 'equalto', false) if properties.hide_automatic_feedbacks else feedbacks %}
+    {% set feedbacksToShow = feedbacksToShow | slice(0, properties.amount) if properties.amount else feedbacksToShow %}
+    {% for feedback in feedbacksToShow %}
+      {% render_snippet "feedback-card.njk", feedback=feedback %}
+    {% endfor %}
+  </div>
+</section>
