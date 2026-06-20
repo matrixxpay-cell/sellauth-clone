@@ -6,10 +6,14 @@
   </div>
   {% endif %}
   <div class="lb-feedbacks-grid">
-    {% set feedbacksToShow = feedbacks | selectattr('automatic', 'equalto', false) if properties.hide_automatic_feedbacks else feedbacks %}
-    {% set feedbacksToShow = feedbacksToShow | slice(0, properties.amount) if properties.amount else feedbacksToShow %}
-    {% for feedback in feedbacksToShow %}
-      {% render_snippet "feedback-card.njk", feedback=feedback %}
-    {% endfor %}
+    {% if feedbacks %}
+      {% for feedback in feedbacks %}
+        {% if properties.hide_automatic_feedbacks and feedback.automatic %}
+        {% elif properties.amount and loop.index > properties.amount %}
+        {% else %}
+          {% render_snippet "feedback-card.njk", feedback=feedback %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   </div>
 </section>

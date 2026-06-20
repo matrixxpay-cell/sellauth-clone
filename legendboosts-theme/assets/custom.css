@@ -448,8 +448,29 @@ body.lb-body {
 }
 .lb-feedback-card:hover { border-color: rgba(255, 255, 255, 0.12); }
 
-.lb-feedback-stars { color: #f5c518; font-size: 0.95rem; letter-spacing: 1px; }
+.lb-feedback-stars { font-size: 0.95rem; letter-spacing: 1px; }
 .lb-star-empty { color: rgba(var(--cl-t-primary), 0.2); }
+
+/* Star rating display — data-rating sets the filled portion */
+.lb-stars-display {
+  display: inline-block;
+  position: relative;
+  color: rgba(var(--cl-t-primary), 0.2);
+  font-size: inherit;
+  letter-spacing: 2px;
+}
+.lb-stars-display .lb-star-filled {
+  position: absolute;
+  left: 0; top: 0;
+  color: #f5c518;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.lb-stars-display[data-rating="1"] .lb-star-filled { width: 20%; }
+.lb-stars-display[data-rating="2"] .lb-star-filled { width: 40%; }
+.lb-stars-display[data-rating="3"] .lb-star-filled { width: 60%; }
+.lb-stars-display[data-rating="4"] .lb-star-filled { width: 80%; }
+.lb-stars-display[data-rating="5"] .lb-star-filled { width: 100%; }
 .lb-feedback-text { font-size: 0.875rem; color: rgba(var(--cl-t-primary), 0.7); line-height: 1.6; font-style: italic; }
 .lb-feedback-meta { display: flex; flex-direction: column; gap: 2px; margin-top: auto; }
 .lb-feedback-author { font-size: 0.82rem; font-weight: 600; color: rgb(var(--cl-t-primary)); }

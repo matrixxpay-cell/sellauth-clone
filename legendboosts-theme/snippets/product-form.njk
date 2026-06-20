@@ -1,57 +1,63 @@
 <div class="lb-product-form" x-data="appProductForm({{ product | json }})" x-init="init()">
-  {% if product.variants | length > 1 %}
-  <div class="lb-form-group">
-    <label class="lb-label">Variant</label>
-    {% if properties.variant_selector == 'buttons' %}
-    <div class="lb-variant-buttons">
-      <template x-for="variant in variants" :key="variant.id">
-        <button type="button"
-          @click="selectVariant(variant)"
-          class="lb-variant-btn"
-          :class="{ 'lb-variant-btn--active': selectedVariant && selectedVariant.id === variant.id, 'lb-variant-btn--disabled': variant.stock === 0 }"
-          :disabled="variant.stock === 0"
-          x-text="variant.name">
-        </button>
-      </template>
-    </div>
-    {% else %}
-    <select x-model="selectedVariantId" @change="selectVariantById($event.target.value)" class="lb-input lb-select-input">
-      <option value="">Select a variant</option>
-      <template x-for="variant in variants" :key="variant.id">
-        <option :value="variant.id" :disabled="variant.stock === 0" x-text="variant.name + (variant.stock === 0 ? ' (Out of Stock)' : '')"></option>
-      </template>
-    </select>
-    {% endif %}
-  </div>
-  {% endif %}
-
-  <div class="lb-form-group" x-show="selectedVariant && selectedVariant.custom_fields && selectedVariant.custom_fields.length > 0">
-    <template x-for="field in (selectedVariant ? selectedVariant.custom_fields : [])" :key="field.id">
-      <div class="lb-form-group">
-        <label class="lb-label" x-text="field.label"></label>
-        <input :type="field.type" x-model="customFields[field.id]" class="lb-input" :placeholder="field.placeholder" :required="field.required" />
+  <div x-show="variants && variants.length > 1">
+    <div class="lb-form-group">
+      <label class="lb-label">Variant</label>
+      {% if properties.variant_selector == 'buttons' %}
+      <div class="lb-variant-buttons">
+        <template x-for="variant in variants" :key="variant.id">
+          <button type="button"
+            @click="selectVariant(variant)"
+            class="lb-variant-btn"
+            :class="{ 'lb-variant-btn--active': selectedVariant && selectedVariant.id === variant.id, 'lb-variant-btn--disabled': variant.stock === 0 }"
+            :disabled="variant.stock === 0"
+            x-text="variant.name">
+          </button>
+        </template>
       </div>
-    </template>
-  </div>
-
-  <div class="lb-form-group" x-show="selectedVariant && selectedVariant.min_quantity !== selectedVariant.max_quantity">
-    <label class="lb-label">Quantity</label>
-    <div class="lb-qty-control">
-      <button type="button" @click="quantity > minQty ? quantity-- : null" class="lb-qty-btn">-</button>
-      <input type="number" x-model.number="quantity" :min="minQty" :max="maxQty" class="lb-input lb-qty-input" />
-      <button type="button" @click="quantity < maxQty ? quantity++ : null" class="lb-qty-btn">+</button>
+      {% else %}
+      <select @change="selectVariantById($event.target.value)" class="lb-input lb-select-input">
+        <option value="">Select a variant</option>
+        <template x-for="variant in variants" :key="variant.id">
+          <option :value="variant.id" :disabled="variant.stock === 0" x-text="variant.name + (variant.stock === 0 ? ' (Out of Stock)' : '')"></option>
+        </template>
+      </select>
+      {% endif %}
     </div>
   </div>
+
+  <template x-if="selectedVariant && selectedVariant.custom_fields && selectedVariant.custom_fields.length > 0">
+    <div>
+      <template x-for="field in selectedVariant.custom_fields" :key="field.id">
+        <div class="lb-form-group">
+          <label class="lb-label" x-text="field.label"></label>
+          <input :type="field.type || 'text'" x-model="customFields[field.id]" class="lb-input" :placeholder="field.placeholder || ''" :required="field.required" />
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <template x-if="selectedVariant && selectedVariant.min_quantity !== selectedVariant.max_quantity">
+    <div class="lb-form-group">
+      <label class="lb-label">Quantity</label>
+      <div class="lb-qty-control">
+        <button type="button" @click="quantity > minQty ? quantity-- : null" class="lb-qty-btn">-</button>
+        <input type="number" x-model.number="quantity" :min="minQty" :max="maxQty" class="lb-input lb-qty-input" />
+        <button type="button" @click="quantity < maxQty ? quantity++ : null" class="lb-qty-btn">+</button>
+      </div>
+    </div>
+  </template>
 
   <div class="lb-product-form-actions">
     {% if not properties.hide_add_to_cart %}
-    <button type="button" @click="addToCart()" class="lb-btn lb-btn--ghost lb-btn--full" :disabled="loading || !selectedVariant || selectedVariant.stock === 0">
+    <button type="button" @click="addToCart()" class="lb-btn lb-btn--ghost lb-btn--full"
+      :disabled="loading || !selectedVariant || selectedVariant.stock === 0">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="lb-icon" viewBox="0 0 256 256"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87Z"/></svg>
       Add to Cart
     </button>
     {% endif %}
     {% if not properties.hide_buy_now %}
-    <button type="button" @click="buyNow()" class="lb-btn lb-btn--primary lb-btn--full" :disabled="loading || !selectedVariant || selectedVariant.stock === 0">
+    <button type="button" @click="buyNow()" class="lb-btn lb-btn--primary lb-btn--full"
+      :disabled="loading || !selectedVariant || selectedVariant.stock === 0">
       Buy Now
     </button>
     {% endif %}

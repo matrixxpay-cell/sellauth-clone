@@ -2,7 +2,7 @@
   <div class="lb-product-layout">
     <!-- Images -->
     <div class="lb-product-images">
-      {% if product.image_urls | length > 1 %}
+      {% if product.image_urls and product.image_urls | length > 1 %}
       <div class="splide lb-splide" id="product-splide">
         <div class="splide__track">
           <ul class="splide__list">
@@ -16,10 +16,12 @@
       </div>
       <script>
         document.addEventListener('DOMContentLoaded', function () {
-          new Splide('#product-splide', { type: 'loop', pagination: true, arrows: true }).mount();
+          if (typeof Splide !== 'undefined') {
+            new Splide('#product-splide', { type: 'loop', pagination: true, arrows: true }).mount();
+          }
         });
       </script>
-      {% elif product.image_urls | length == 1 %}
+      {% elif product.image_urls and product.image_urls | length == 1 %}
         <img src="{{ product.image_urls[0] }}" alt="{{ product.name }}" class="lb-product-main-image" style="aspect-ratio: var(--product-page-image-aspect-ratio); object-fit: var(--product-image-fit);" />
       {% elif product.image_url %}
         <img src="{{ product.image_url }}" alt="{{ product.name }}" class="lb-product-main-image" style="aspect-ratio: var(--product-page-image-aspect-ratio); object-fit: var(--product-image-fit);" />
@@ -28,6 +30,7 @@
 
     <!-- Details -->
     <div class="lb-product-details">
+      {% if product.product_badges and product.product_badges.page and product.product_badges.page | length > 0 %}
       <div class="lb-product-badges-top">
         {% for badge in product.product_badges.page %}
         <span class="lb-badge" style="background-color: {{ badge.color }}">
@@ -36,13 +39,16 @@
         </span>
         {% endfor %}
       </div>
+      {% endif %}
 
       <h1 class="lb-product-title">{{ product.name }}</h1>
 
       {% if product.average_rating %}
       <div class="lb-product-rating">
-        {% for i in range(product.average_rating | round) %}★{% endfor %}
-        <span class="lb-rating-count">({{ product.total_feedbacks }} reviews)</span>
+        <span class="lb-stars-display" data-rating="{{ product.average_rating | round }}">
+          <span class="lb-star-filled">★★★★★</span>
+        </span>
+        <span class="lb-rating-count">({{ feedbacks | length }} reviews)</span>
       </div>
       {% endif %}
 
@@ -75,12 +81,12 @@
   </div>
   {% endif %}
 
-  {% if product.feedbacks | length > 0 %}
+  {% if feedbacks and feedbacks | length > 0 %}
   <div class="lb-product-reviews-section">
     <h2 class="lb-section-title">Reviews</h2>
     <div class="lb-section-line"></div>
     <div class="lb-feedbacks-grid">
-      {% for feedback in product.feedbacks %}
+      {% for feedback in feedbacks %}
         {% render_snippet "feedback-card.njk", feedback=feedback %}
       {% endfor %}
     </div>

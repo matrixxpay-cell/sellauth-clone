@@ -1,6 +1,6 @@
 <div class="lb-feedback-card">
   <div class="lb-feedback-stars">
-    {% for i in range(feedback.rating) %}★{% endfor %}{% for i in range(5 - feedback.rating) %}<span class="lb-star-empty">★</span>{% endfor %}
+    <span class="lb-stars-display" data-rating="{{ feedback.rating }}">★★★★★</span>
   </div>
   {% if feedback.message %}
   <p class="lb-feedback-text">"{{ feedback.message }}"</p>
