@@ -5,6 +5,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
+/* ── Alpine.js ────────────────────────────────────────────── */
+[x-cloak] { display: none !important; }
+
+/* ── Custom Tailwind Utility Classes (normally built by CLI) ─ */
+.aspect-product-card-image { aspect-ratio: var(--product-card-image-aspect-ratio, 16/9); }
+.aspect-product-page-image { aspect-ratio: var(--product-page-image-aspect-ratio, 16/9); }
+.aspect-group-card-image   { aspect-ratio: var(--group-card-image-aspect-ratio, 16/9); }
+.aspect-blog-card-image    { aspect-ratio: var(--blog-card-image-aspect-ratio, 16/9); }
+.object-product-image      { object-fit: var(--product-image-fit, cover); }
+.object-group-image        { object-fit: var(--group-image-fit, cover); }
+
+.hide-scrollbar            { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
 /* ── Reset / Base ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
