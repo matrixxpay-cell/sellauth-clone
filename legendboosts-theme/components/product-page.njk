@@ -48,28 +48,30 @@
         <span class="lb-stars-display" data-rating="{{ product.average_rating | round }}">
           <span class="lb-star-filled">★★★★★</span>
         </span>
+        {% if feedbacks %}
         <span class="lb-rating-count">({{ feedbacks | length }} reviews)</span>
+        {% endif %}
       </div>
       {% endif %}
 
       <div class="lb-product-price-block">
         <span class="lb-product-price">
-          {% if product.min_price != product.max_price %}
-            <span x-text="appCurrency.format({{ product.min_price }}, '{{ product.currency }}')">{{ formatPrice(product.min_price, product.currency) }}</span>
+          {% if product.min_price and product.max_price and product.min_price != product.max_price %}
+            <span x-text="appCurrency.format({{ product.min_price }}, '{{ product.currency }}')">{{ product.min_price }} {{ product.currency }}</span>
             &ndash;
-            <span x-text="appCurrency.format({{ product.max_price }}, '{{ product.currency }}')">{{ formatPrice(product.max_price, product.currency) }}</span>
+            <span x-text="appCurrency.format({{ product.max_price }}, '{{ product.currency }}')">{{ product.max_price }} {{ product.currency }}</span>
           {% elif product.min_price %}
-            <span x-text="appCurrency.format({{ product.min_price }}, '{{ product.currency }}')">{{ formatPrice(product.min_price, product.currency) }}</span>
+            <span x-text="appCurrency.format({{ product.min_price }}, '{{ product.currency }}')">{{ product.min_price }} {{ product.currency }}</span>
           {% endif %}
         </span>
         {% if product.min_price_slash %}
         <span class="lb-price-slash">
-          <span x-text="appCurrency.format({{ product.min_price_slash }}, '{{ product.currency }}')">{{ formatPrice(product.min_price_slash, product.currency) }}</span>
+          <span x-text="appCurrency.format({{ product.min_price_slash }}, '{{ product.currency }}')">{{ product.min_price_slash }} {{ product.currency }}</span>
         </span>
         {% endif %}
       </div>
 
-      {% render_snippet "product-form.njk", product=product, properties=properties %}
+      {% render_snippet "product-form.njk", product=product, properties=properties, coupons=coupons %}
     </div>
   </div>
 
